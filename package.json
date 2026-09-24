@@ -1,0 +1,19 @@
+{
+  "name": "sat-drat-proof-auditor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "证明轨迹台：SAT DRAT 子句、传播链与失败前缀（离线形式核验应用）",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "test": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}
