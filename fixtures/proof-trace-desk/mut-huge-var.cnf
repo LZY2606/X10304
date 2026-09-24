@@ -1,0 +1,7 @@
+c mutation: variable id beyond int32 range, raw token must be preserved
+p cnf 3 5
+1 2 0
+-1 2 0
+-2 3 0
+-2 -3 0
+1099511627776 -1099511627776 0

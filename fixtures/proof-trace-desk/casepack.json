@@ -1,0 +1,16 @@
+{
+  "name": "proof-trace-desk",
+  "title": "证明轨迹台：SAT DRAT 子句、传播链与失败前缀",
+  "units": { "offset": "byte", "budget": "up-step", "time": "ISO8601-UTC", "variable": "dimacs-var-id" },
+  "cases": [
+    { "slug": "baseline", "title": "基线：完整核验（token/变量编号/多重集/偏移/预算均保留）", "cnf": "baseline.cnf", "proof": "baseline.drat", "expect": "verified" },
+    { "slug": "duplicate-clause", "title": "变异：重复子句，多重集保留两个出现", "cnf": "mut-duplicate-clause.cnf", "proof": "baseline.drat", "expect": "verified", "mutates": "cnf" },
+    { "slug": "tautology", "title": "变异：tautology 与重复 literal 按语法处理", "cnf": "baseline.cnf", "proof": "mut-tautology.drat", "expect": "verified", "mutates": "proof" },
+    { "slug": "rat-pivot", "title": "变异：RAT pivot（RUP 不成立，pivot=-1 的 RAT 成立）", "cnf": "mut-rat-pivot.cnf", "proof": "mut-rat-pivot.drat", "expect": "inconclusive", "mutates": "cnf+proof" },
+    { "slug": "multi-delete", "title": "变异：多次删除与删除不存在子句（集合不变+诊断）", "cnf": "baseline.cnf", "proof": "mut-multi-delete.drat", "expect": "verified", "mutates": "proof" },
+    { "slug": "missing-zero", "title": "变异：缺零终止（语法诊断，字面量留在原位）", "cnf": "baseline.cnf", "proof": "mut-missing-zero.drat", "expect": "verified", "mutates": "proof" },
+    { "slug": "huge-var", "title": "变异：超大变量编号（原始 token 保留）", "cnf": "mut-huge-var.cnf", "proof": "baseline.drat", "expect": "verified", "mutates": "cnf" },
+    { "slug": "budget-exhaust", "title": "变异：预算耗尽（inconclusive，不是证明无效）", "cnf": "mut-budget-exhaust.cnf", "proof": "mut-budget-exhaust.drat", "expect": "inconclusive", "budget": { "maxUpStepsPerStep": 5, "maxUpStepsTotal": 1000 }, "mutates": "params" },
+    { "slug": "invalid-step", "title": "变异：既非 RUP 也非 RAT（最短失败前缀）", "cnf": "mut-invalid-step.cnf", "proof": "mut-invalid-step.drat", "expect": "refuted", "mutates": "cnf+proof" }
+  ]
+}
