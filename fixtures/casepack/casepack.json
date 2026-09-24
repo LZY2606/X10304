@@ -1,0 +1,87 @@
+{
+  "id": "proof-trace-bench",
+  "title": "证明轨迹台：SAT DRAT 子句、传播链与失败前缀",
+  "baseline": {
+    "cnf": "baseline.cnf",
+    "proof": "baseline.drat",
+    "params": { "budget": 64 }
+  },
+  "mutations": [
+    {
+      "id": "duplicate_clause",
+      "title": "重复子句",
+      "changedSource": "proof",
+      "edit": { "type": "proof.prepend", "line": "1 2 0" },
+      "expect": "子句已在多重集中：计数加一并留诊断，证明其余部分不受影响"
+    },
+    {
+      "id": "tautology",
+      "title": "tautology 子句",
+      "changedSource": "proof",
+      "edit": { "type": "proof.prepend", "line": "1 -1 0" },
+      "expect": "含互补 literal，按语法接受并留诊断"
+    },
+    {
+      "id": "rat_pivot",
+      "title": "RAT pivot 候选",
+      "changedSource": "proof",
+      "edit": { "type": "proof.replaceLine", "index": 1, "line": "3 -1 0" },
+      "expect": "首选 pivot=3 不成立，候选 pivot=-1 成立，全部合法候选保留；后续 add -1 触发最短失败前缀"
+    },
+    {
+      "id": "multi_delete",
+      "title": "多次删除与删除不存在子句",
+      "changedSource": "proof",
+      "edit": { "type": "proof.insertAfter", "index": 0, "lines": ["d -1 2 0", "d 9 9 0"] },
+      "expect": "重复删除与删除不存在子句均不改变集合，但各留一条诊断"
+    },
+    {
+      "id": "missing_zero",
+      "title": "缺零终止",
+      "changedSource": "proof",
+      "edit": { "type": "proof.dropZeroTerminator", "index": 2 },
+      "expect": "proof 行缺少 0 终止符，按语法在行尾封闭并留诊断，核验继续"
+    },
+    {
+      "id": "huge_var",
+      "title": "超大变量编号",
+      "changedSource": "proof",
+      "edit": { "type": "proof.replaceLine", "index": 2, "line": "-3 9007199254740993 0" },
+      "expect": "9007199254740993 超出安全整数：原始 token 保留在原位置并附诊断，不参与规范化计算"
+    },
+    {
+      "id": "budget_exhausted",
+      "title": "预算耗尽",
+      "changedSource": "params",
+      "edit": { "type": "params.budget", "value": 1 },
+      "expect": "传播预算 1 步耗尽：结论为不确定（inconclusive_resource），不是证明无效"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "param_revision",
+      "kind": "param_revision",
+      "title": "参数修订：传播预算 64 → 1",
+      "edit": { "type": "params.budget", "value": 1 },
+      "narrative": "依赖图只重算受影响步骤，parse:cnf 与未触及节点保持有效并给出原因"
+    },
+    {
+      "id": "source_change",
+      "kind": "source_change",
+      "title": "局部源数据改动：proof 第 3 行 -3 0 → -3 1 0",
+      "edit": { "type": "proof.replaceLine", "index": 2, "line": "-3 1 0" },
+      "narrative": "只有 parse:proof 与该行之后的步骤需要重算，之前的步骤仍有效"
+    },
+    {
+      "id": "conflicting_decisions",
+      "kind": "conflicting_decisions",
+      "title": "冲突的人工决定：rat_pivot 案例的 pivot 取舍",
+      "branch": "rat_pivot.pivot",
+      "decisions": [
+        { "reviewer": "reviewer-A", "choice": "accept-pivot--1", "rationale": "候选 pivot=-1 的全部归结式 RUP 成立，采纳", "selected": true },
+        { "reviewer": "reviewer-B", "choice": "reject-clause", "rationale": "首选 pivot=3 不成立即应拒绝该子句", "selected": false }
+      ],
+      "narrative": "两位审阅者从同一版本出发给出冲突决定，未采纳候选保留，可切换"
+    }
+  ]
+}
