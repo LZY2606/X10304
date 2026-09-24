@@ -1,0 +1,27 @@
+{
+  "name": "drat-proof-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "证明轨迹台：SAT DRAT 子句、传播链与失败前缀 —— 离线形式化证明核验",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "case:build": "tsx scripts/build-cases.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^3.0.4"
+  }
+}
