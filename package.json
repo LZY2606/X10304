@@ -1,0 +1,25 @@
+{
+  "name": "sat-drat-verifier",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SAT/DRAT proof trace bench: CNF import, RUP/RAT checking, versioned event archive with failure prefixes",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "test": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  }
+}
