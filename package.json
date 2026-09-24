@@ -1,0 +1,30 @@
+{
+  "name": "drat-proof-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Proof-track desk: import CNF + DRAT, verify clause addition/deletion, RUP/RAT unit propagation and final empty clause.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "vitest",
+    "dev": "node --experimental-strip-types server/index.ts",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.15.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.14",
+    "vitest": "^2.1.9"
+  }
+}
